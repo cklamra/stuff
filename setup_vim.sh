@@ -6,17 +6,18 @@ python3 -m pip install flake8
 
 echo "
 call plug#begin()
-\"Plug 'vimpostor/vim-lumen' autodarkmode mac/linux
+Plug 'vimpostor/vim-lumen' \" autodarkmode mac/linux
 Plug 'preservim/nerdtree'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-airline/vim-airline'
 \"Plug 'vim-airline/vim-airline-themes'
 Plug 'dense-analysis/ale'
-Plug 'joshdick/onedark.vim'
+\"Plug 'joshdick/onedark.vim'
 \"Plug 'prabirshrestha/vim-lsp'
 Plug 'Vimjas/vim-python-pep8-indent'
 \"Plug 'sainnhe/everforest'
 \"Plug 'rakr/vim-one'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
@@ -39,7 +40,11 @@ endif
 \"  set termguicolors
 \"endif
 
-colorscheme onedark
+au User LumenLight colorscheme onehalflight 
+au User LumenLight let g:airline_theme='onehalflight'
+au User LumenDark colorscheme onehalfdark
+au User LumenDark let g:airline_theme='onehalfdark'
+\"colorscheme onedark
 \"autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE
 \"let g:everforest_background='hard' \" 'soft', 'medium', 'hard'
 \"let g:everforest_better_performance=1
