@@ -1,0 +1,24 @@
+{
+    "name": "One Cez",
+    "comment": "Terminal colors matching onedark vim theme.",
+    "use-theme-colors": false,
+    "foreground-color": "#BEBEBE",
+    "background-color": "#262626",
+    "palette": [
+      "#073542",
+      "#DC322F",
+      "#859900",
+      "#B58900",
+      "#268BD2",
+      "#D33682",
+      "#2AA198",
+      "#DDDDDD",
+      "#002B36",
+      "#CB4B16",
+      "#586E75",
+      "#657B83",
+      "#839496",
+      "#6C71C4",
+      "#93A1A1",
+      "#FDFDFD"]
+}
