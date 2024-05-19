@@ -1,0 +1,24 @@
+{
+    "name": "One-Adwaita dark",
+    "comment": "Terminal colors matching Adwaita and One vim theme.",
+    "use-theme-colors": false,
+    "foreground-color": "#FFFFFF",
+    "background-color": "#1E1E1E",
+    "palette": [
+      "#1e1e1e",
+      "#E06C75",
+      "#98c379",
+      "#d19a66",
+      "#61afef",
+      "#c678dd",
+      "#56b6c2",
+      "#abb2bf",
+      "#4b5263",
+      "#e06c75",
+      "#98c379",
+      "#d19a66",
+      "#61afef",
+      "#c678dd",
+      "#56b6c2",
+      "#ffffff"]
+}
