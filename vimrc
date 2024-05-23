@@ -43,6 +43,7 @@ set ic
 set mouse=a
 set fillchars+=vert:\|
 "set fillchars+=vert:│
+hi VertSplit guibg=bg guifg=fg
 
 " Colors
 if (empty($TMUX))
@@ -60,11 +61,19 @@ endif
 
 " >one
 let g:one_allow_italics = 1 " for one 
-let g:airline_theme='one'
-set background=dark
+let g:airline_theme='one_transparent'
 colorscheme one
+set background=dark
 au User LumenLight set background=light
 au User LumenDark set background=dark
+
+" airline symbols
+let g:airline_powerline_fonts = 0
+let g:airline_symbols = {}
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.colnr = ' '
+let g:airline_symbols.linenr = ' '
+
 
 " >everforest
 "autocmd VimEnter * hi EndOfBuffer guibg=NONE ctermbg=NONE
@@ -98,13 +107,6 @@ nnoremap <A-F7> 7gt
 nnoremap <A-F8> 8gt
 nnoremap <A-F9> 9gt
 nnoremap <A-F10> 10gt
-
-" airline symbols
-let g:airline_powerline_fonts = 1
-let g:airline_symbols = {}
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.colnr = ' '
-let g:airline_symbols.linenr = ' '
 
 " F5 to execute python
 autocmd FileType python nnoremap <buffer> <F5> :w<cr>:exec '!clear'<cr>:exec '!python3' shellescape(expand('%:p'), 1)<cr>
@@ -156,6 +158,7 @@ endfunction
 " NERDTree config
 inoremap <c-b> <Esc>:NERDTreeToggle<cr>
 nnoremap <c-b> <Esc>:NERDTreeToggle<cr>
+hi def link NERDTreeExecFile ModeMsg
 let NERDTreeIgnore=['\~$', '\.pyc$', '__pycache__']
 "let g:nerdtree_tabs_open_on_console_startup=1
 "autocmd StdinReadPre * let s:std_in=1
@@ -169,5 +172,10 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '__pycache__']
 "autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 "autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 "nnoremap <C-n> :NERDTreeMirror<CR>:NERDTreeFocus<CR>
+
+" Which key
+nnoremap <silent> <leader> :WhichKey '\'<CR>
+set timeoutlen=500
+
 " TODO sessions, welcome screen
 
