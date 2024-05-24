@@ -20,6 +20,18 @@ Plug 'liuchengxu/vim-which-key'
 "if (has("nvim"))
 "    Plug 'goolord/alpha-nvim'
 "endif
+if has('nvim')
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+else
+  Plug 'gelguy/wilder.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 call plug#end()
 
 if (has("nvim"))
@@ -60,7 +72,7 @@ endif
 
 
 " >one
-let g:one_allow_italics = 1 " for one 
+let g:one_allow_italics = 1 " for one
 let g:airline_theme='one_transparent'
 colorscheme one
 set background=dark
@@ -176,6 +188,14 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '__pycache__']
 " Which key
 nnoremap <silent> <leader> :WhichKey '\'<CR>
 set timeoutlen=500
+
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'highlights': {
+      \   'border': 'Normal',
+      \ },
+      \ 'border': 'rounded',
+      \ })))
 
 " TODO sessions, welcome screen
 
