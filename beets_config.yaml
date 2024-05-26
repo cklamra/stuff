@@ -1,19 +1,20 @@
 directory: ~/Music/music
 library: ~/.config/beets/musiclibrary.db
-plugins: fromfilename discogs fetchart lastgenre acousticbrainz badfiles missing edit chroma filetote inline mpdupdate thumbnails lastimport keyfinder
+plugins: fromfilename discogs fetchart lastgenre acousticbrainz badfiles missing edit chroma filetote inline mpdupdate thumbnails lastimport keyfinder hook
 paths:
     default: artists/$albumartist/$albumartist - $year - $album %if{$catalognum,[$catalognum]} %aunique{albumartist album, albumtype label format albumdisambig releasegroupdisambig, []} ($filetype)/%if{$multidisc,$disc-}$track - $title
     singleton: singletons/$artist - $year - $title (from $album) %if{$catalognum,[$catalognum]} ($filetype)
     comp: compilations/VA ($label) - $year - $album %if{$catalognum,[$catalognum]} %aunique{albumartist album, albumtype label format albumdisambig releasegroupdisambig, []} ($filetype)/%if{$multidisc,$disc-}$track - $title
+match:
+  strong_rec_thresh: 0.05
 discogs:
-   source_weight: 0.75
+  source_weight: 0.75
 lastfm:
-    user: cklamra
+  user: cklamra
 badfiles:
-    check_on_import: no
-    commands:
-        ogg: myoggchecker --opt1 --opt2
-        flac: flac --test --warnings-as-errors --silent
+  check_on_import: no
+  commands:
+    flac: flac --test --warnings-as-errors --silent
 edit:
   itemfields: catalognum media disc track title artist album 
 musicbrainz:
@@ -21,7 +22,11 @@ musicbrainz:
 filetote:
   extensions: .cue .log .png .jpeg .nfo .jpg .JPG .JPEG .txt
 item_fields:
-    filetype: format + str(bitrate).strip('kbps') if format == 'MP3' else format
+  filetype: format + str(bitrate).strip('kbps') if format == 'MP3' else format
 keyfinder:
-    auto: yes
-    bin: keyfinder-cli
+  auto: no
+  bin: keyfinder-cli
+hooks:
+  hooks:
+    - event: before_choose_candidate
+      command: paplay /usr/share/sounds/gnome/default/alerts/hum.ogg
