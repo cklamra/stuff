@@ -17,6 +17,7 @@ Plug 'chrisbra/csv.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'haya14busa/incsearch.vim'
 Plug 'liuchengxu/vim-which-key'
+Plug 'chrisbra/Colorizer'
 "if (has("nvim"))
 "    Plug 'goolord/alpha-nvim'
 "endif
@@ -56,6 +57,7 @@ set mouse=a
 set fillchars+=vert:\|
 "set fillchars+=vert:│
 hi VertSplit guibg=bg guifg=fg
+let g:colorizer_auto_filetype='css,html,py,vim'
 
 " Colors
 if (empty($TMUX))

@@ -1,32 +1,72 @@
 directory: ~/Music/music
 library: ~/.config/beets/musiclibrary.db
-plugins: fromfilename discogs fetchart lastgenre acousticbrainz badfiles missing edit chroma filetote inline mpdupdate thumbnails lastimport keyfinder hook
+
+plugins: fromfilename discogs fetchart lastgenre acousticbrainz badfiles missing edit filetote inline mpdupdate thumbnails lastimport keyfinder hook embedart drop2beets bandcamp importreplace
+
 paths:
     default: artists/$albumartist/$albumartist - $year - $album %if{$catalognum,[$catalognum]} %aunique{albumartist album, albumtype label format albumdisambig releasegroupdisambig, []} ($filetype)/%if{$multidisc,$disc-}$track - $title
     singleton: singletons/$artist - $year - $title (from $album) %if{$catalognum,[$catalognum]} ($filetype)
     comp: compilations/VA ($label) - $year - $album %if{$catalognum,[$catalognum]} %aunique{albumartist album, albumtype label format albumdisambig releasegroupdisambig, []} ($filetype)/%if{$multidisc,$disc-}$track - $title
+import:
+  move: yes
+  copy: no
+  quiet_fallback: asis
+edit:
+  itemfields: catalognum media disc track title artist album albumartist label
+
 match:
-  strong_rec_thresh: 0.05
+  strong_rec_thresh: 0.025
 discogs:
+  source_weight: 0
+musicbrainz:
   source_weight: 0.75
+  extra_tags: [media, year, label, catalognum, country] 
+bandcamp:
+  source_weight: 0.5
+  include_digital_only_tracks: true
+  search_max: 4
+  art: yes
+  comments_separator: "\n---\n"
+  exclude_extra_fields: []
+  genre:
+    capitalize: yes
+    maximum: 0
+    always_include: []
+    mode: progressive 
+
 lastfm:
   user: cklamra
-badfiles:
-  check_on_import: no
-  commands:
-    flac: flac --test --warnings-as-errors --silent
-edit:
-  itemfields: catalognum media disc track title artist album 
-musicbrainz:
-    extra_tags: [media, year, label, catalognum, country] 
+
 filetote:
   extensions: .cue .log .png .jpeg .nfo .jpg .JPG .JPEG .txt
+embedart:
+  auto: yes
 item_fields:
-  filetype: format + str(bitrate).strip('kbps') if format == 'MP3' else format
+  filetype: format + '-' + str(int(bitrate/1000)).strip('kbps') if format == 'MP3' else format
+
+badfiles:
+  check_on_import: yes
+  commands:
+    flac: flac --test --warnings-as-errors --silent
 keyfinder:
   auto: no
   bin: keyfinder-cli
-hooks:
+hook:
   hooks:
-    - event: before_choose_candidate
-      command: paplay /usr/share/sounds/gnome/default/alerts/hum.ogg
+    - event: import_task_before_choice
+      command: paplay /usr/share/sounds/gnome/default/alerts/hum.ogg 
+importreplace:
+  replacements:
+    - item_fields: album
+      album_fields: album
+      replace:
+        'E\.P\.': 'EP'
+        'L\.P\.': 'LP'
+    - album_fields: catalognum
+      replace:
+        '[\[\]]': ''
+        'CD$': ''
+
+drop2beets:
+  dropbox_path: ~/music/beets-dropbox
+  log_path: ~/.config/beets/drop2beets.log
