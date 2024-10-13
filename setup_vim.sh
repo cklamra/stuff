@@ -6,6 +6,10 @@ python3 -m pip install flake8
 
 cp vimrc ~/.vimrc
 
+
+sys_python_path="$(pyenv shell system; pyenv which python)"
+echo "let g:python3_host_prog=\"$sys_python_path\"" >> ~/.vimrc
+
 vim -c "PlugInstall | PlugUpdate | PlugUpgrade | qa"
 vim -c "CocInstall coc-pyright | qa"
 vim -c "CocInstall coc-json | qa"
